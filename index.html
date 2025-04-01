@@ -18,7 +18,7 @@
           <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
               <li v-for="(page,index) in pages" class="nav-item" :key="index">
-                <a class="nav-link active" aria-current="page" :href="page.nav.link" :title="`${page.nav.name} page`">{{page.nav.name}}</a>
+                <a class="nav-link active" aria-current="page" :href="page.link" :title="`${page.name} page`" @click.prevent = "currentPage = index">{{page.name}}</a>
               </li>
               
               <!-- <li class="nav-item dropdown">
@@ -43,53 +43,40 @@
     </nav>
 
     <div id="content" class="container">
-        <h1>{{title}}</h1>
-        <h4>{{details}}</h4>
+        <h1>{{pages[currentPage].title}}</h1>
+        <h4>{{pages[currentPage].details}}</h4>
     </div>
 
     <script>
         Vue.createApp({
             data(){
                 return{
+                    currentPage : 0,
                     pages: [
                         { 
                             title: "home page",
                             details: "this is home page",
                             name: "home", 
-                            link: "https://www.google.com",
+                            link: "index.html",
                         },
                         { 
                             title: "link page",
                             details: "this is link page",
                             name: "link", 
-                            link: "https://www.google.com" 
+                            link: "link.html" 
                         },
                         { 
                             title: "contact page",
                             details: "this is contact page",
                             name: "contact", 
-                            link: "https://www.google.com" 
+                            link: "contact.html" 
                         },
                         { 
                             title: "about page",
                             details: "this is details page",
                             name: "about", 
-                            link: "https://www.google.com" 
+                            link: "about" 
                         }
-                    ]
-                }
-            }
-        }).mount();
-        Vue.createApp({
-            data(){
-                return{
-                    title:"Vue test",
-                    details:"welcome to vue learning",
-                    navs: [
-                      { name: "home", link: "https://www.google.com" },
-                      { name: "link", link: "https://www.google.com" },
-                      { name: "contact", link: "https://www.google.com" },
-                      { name: "about", link: "https://www.google.com" }
                     ]
                 }
             }
