@@ -9,7 +9,9 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light"
+        :class="navbarClasses"
+    >
         <div class="container-fluid">
           <a class="navbar-brand" href="#">Navbar</a>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -18,7 +20,11 @@
           <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
               <li v-for="(page,index) in pages" class="nav-item" :key="index">
-                <a class="nav-link active" aria-current="page" :href="page.link" :title="`${page.name} page`" @click.prevent = "currentPage = index">{{page.name}}</a>
+                <a 
+                    class="nav-link" :class="{'active': currentPage == index}"
+                    aria-current="page" :href="page.link" 
+                    :title="`${page.name} page`" @click.prevent = "currentPage = index"
+                >{{page.name}}</a>
               </li>
               
               <!-- <li class="nav-item dropdown">
@@ -32,8 +38,10 @@
                   <li><a class="dropdown-item" href="#">Something else here</a></li>
                 </ul>
               </li> -->
-              
             </ul>
+            <form class="d-flex">
+              <button class="btn btn-outline-success" @click.prevent="darkMood = !darkMood">nav mode</button>
+            </form>
             <form class="d-flex">
               <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
               <button class="btn btn-outline-success" type="submit">Search</button>
@@ -49,9 +57,18 @@
 
     <script>
         Vue.createApp({
+            computed:{
+                navbarClasses(){
+                    return {
+                        'navbar-light bg-light': !this.darkMood,
+                        'navbar-dark bg-dark': this.darkMood,
+                    }
+                }
+            },
             data(){
                 return{
                     currentPage : 0,
+                    darkMood: false,
                     pages: [
                         { 
                             title: "home page",
