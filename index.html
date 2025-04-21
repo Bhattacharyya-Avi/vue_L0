@@ -37,13 +37,10 @@
         </div>
     </nav>
 
-    <div id="content" class="container">
-        <h1>{{pages[currentPage].title}}</h1>
-        <h4>{{pages[currentPage].details}}</h4>
-    </div>
+    <body-viewer :page="pages[currentPage]"></body-viewer>
 
     <script>
-        Vue.createApp({
+        let app = Vue.createApp({
             data(){
                 return{
                     currentPage : 0,
@@ -85,7 +82,19 @@
                     this.navmode = navmode;
                 }
             }
-        }).mount('body');
+        });
+        
+        app.component('body-viewer',{
+            props:['page'],
+            template: `
+                <div id="content" class="container">
+                    <h1>{{page.name}}</h1>
+                    <h4>{{page.details}}</h4>
+                </div>
+            `
+        });
+
+        app.mount('body');
     </script>
 </body>
 </html>
